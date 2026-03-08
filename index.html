@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Midnight Serenade — A Private Karaoke Evening</title>
+    <meta name="description"
+        content="You are exclusively invited to Midnight Serenade — an intimate private karaoke evening of pure elegance, laughter, and unforgettable music." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ─── RESET & BASE ─────────────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F0D060;
+            --gold-dark: #A8891E;
+            --black: #000000;
+            --charcoal: #0D0D0D;
+            --charcoal-2: #141414;
+            --charcoal-3: #1C1C1C;
+            --text: #E8E0CE;
+            --text-muted: #8A8075;
+            --border: rgba(212, 175, 55, 0.25);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ─── SCROLLBAR ────────────────────────────────────────────── */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-dark);
+            border-radius: 2px;
+        }
+
+        /* ─── TYPOGRAPHY ───────────────────────────────────────────── */
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.02em;
+        }
+
+        .gold {
+            color: var(--gold);
+        }
+
+        .section-label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.2rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 1.5rem auto;
+        }
+
+        /* ─── ANIMATIONS ───────────────────────────────────────────── */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes goldPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+            }
+        }
+
+        @keyframes scanline {
+            0% {
+                top: -10%;
+            }
+
+            100% {
+                top: 110%;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.9s ease forwards;
+        }
+
+        .fade-in.delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in.delay-2 {
+            animation-delay: 0.45s;
+        }
+
+        .fade-in.delay-3 {
+            animation-delay: 0.7s;
+        }
+
+        .fade-in.delay-4 {
+            animation-delay: 0.95s;
+        }
+
+        /* Scroll-triggered reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── NAV ──────────────────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.2rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
+            backdrop-filter: blur(0px);
+            transition: background 0.4s, backdrop-filter 0.4s;
+        }
+
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(12px);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            letter-spacing: 0.15em;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* ─── HERO ─────────────────────────────────────────────────── */
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('hero_background.png');
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.08);
+            transition: transform 0.1s linear;
+            will-change: transform;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 50% 40%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+                linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.75) 60%, var(--black) 100%);
+        }
+
+        /* Animated gold particles */
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 1.5rem;
+            max-width: 820px;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.8rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 9vw, 7rem);
+            font-weight: 700;
+            line-height: 1.05;
+            color: #fff;
+            text-shadow: 0 0 80px rgba(212, 175, 55, 0.25);
+            margin-bottom: 0.6rem;
+        }
+
+        .hero-title .italic {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            color: rgba(232, 224, 206, 0.75);
+            margin-bottom: 3rem;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-gold {
+            display: inline-block;
+            padding: 0.9rem 2.6rem;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold));
+            background-size: 200% auto;
+            color: #000;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-position 0.5s, transform 0.3s, box-shadow 0.3s;
+            animation: goldPulse 3s ease-in-out infinite;
+        }
+
+        .btn-gold:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.45);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            padding: 0.9rem 2.6rem;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: transparent;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+            font-size: 0.62rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(180deg, var(--gold), transparent);
+        }
+
+        /* ─── SECTION BASE ─────────────────────────────────────────── */
+        section {
+            padding: 7rem 4rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4.5rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        /* ─── CONCEPT ──────────────────────────────────────────────── */
+        #concept {
+            background: var(--charcoal);
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .concept-img-wrap {
+            position: relative;
+        }
+
+        .concept-img-wrap img {
+            width: 100%;
+            height: 460px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.85) contrast(1.1);
+        }
+
+        .concept-img-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border: 1px solid var(--border);
+            pointer-events: none;
+            transition: border-color 0.4s;
+        }
+
+        .concept-img-wrap:hover::before {
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .concept-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
+        }
+
+        .concept-text h2 {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .concept-text p {
+            font-size: 0.95rem;
+            color: rgba(232, 224, 206, 0.8);
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+        }
+
+        .concept-quote {
+            border-left: 2px solid var(--gold);
+            padding-left: 1.5rem;
+            margin-top: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--gold);
+            line-height: 1.6;
+        }
+
+        /* ─── DETAILS ──────────────────────────────────────────────── */
+        #details {
+            background: var(--black);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .detail-card {
+            background: var(--charcoal-2);
+            border: 1px solid var(--border);
+            padding: 2.2rem 1.8rem;
+            text-align: center;
+            transition: border-color 0.4s, transform 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .detail-card:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-4px);
+        }
+
+        .detail-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .detail-icon {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .detail-card:nth-child(2) .detail-icon {
+            animation-delay: 0.5s;
+        }
+
+        .detail-card:nth-child(3) .detail-icon {
+            animation-delay: 1s;
+        }
+
+        .detail-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .detail-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .detail-sub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        .dress-code {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03));
+            border: 1px solid var(--border);
+            padding: 2.5rem 3rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .dress-code-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .dress-code-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #fff;
+            font-style: italic;
+        }
+
+        .dress-code-hint {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ─── GALLERY ──────────────────────────────────────────────── */
+        #gallery {
+            background: var(--charcoal);
+            padding-bottom: 5rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 240px 240px;
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item:first-child {
+            grid-row: 1 / 3;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.75) saturate(0.9);
+            transition: transform 0.6s ease, filter 0.6s ease;
+            display: block;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.06);
+            filter: brightness(0.9) saturate(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
+            pointer-events: none;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid transparent;
+            transition: border-color 0.4s;
+            pointer-events: none;
+        }
+
+        .gallery-item:hover::after {
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* ─── COUNTDOWN ───────────────────────────────────────────────── */
+        .countdown-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 0 auto 4.5rem;
+            flex-wrap: wrap;
+        }
+
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 110px;
+            padding: 0 1.5rem;
+        }
+
+        .countdown-number {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            letter-spacing: 0.04em;
+            text-shadow:
+                0 0 18px rgba(212, 175, 55, 0.55),
+                0 0 40px rgba(212, 175, 55, 0.25);
+            /* flip animation on digit change */
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .countdown-number.tick {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+
+        .countdown-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            color: rgba(212, 175, 55, 0.65);
+            margin-top: 0.65rem;
+        }
+
+        .countdown-sep {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.6rem);
+            font-weight: 400;
+            color: rgba(212, 175, 55, 0.35);
+            padding-bottom: 1.4rem;
+            /* align with numbers */
+            line-height: 1;
+            user-select: none;
+        }
+
+        @media (max-width: 600px) {
+            .countdown-unit {
+                min-width: 72px;
+                padding: 0 0.8rem;
+            }
+
+            .countdown-sep {
+                font-size: 1.8rem;
+                padding-bottom: 1rem;
+            }
+        }
+
+        /* ─── SECRET EXCHANGE ────────────────────────────────────────── */
+        #exchange {
+            background: var(--black);
+        }
+
+        .exchange-card {
+            max-width: 680px;
+            margin: 0 auto;
+            /* Border animates in on reveal */
+            border: 1px solid transparent;
+            padding: 2.2rem 3.5rem;
+            /* compact before reveal */
+            text-align: center;
+            position: relative;
+            transition: border-color 0.55s ease 0.25s,
+                padding 0.55s ease 0.25s;
+        }
+
+        .exchange-card.revealed {
+            border-color: var(--gold);
+            padding: 4rem 3.5rem;
+            /* full padding on reveal */
+        }
+
+        /* Corner accent marks — hidden until revealed */
+        .exchange-card::before,
+        .exchange-card::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-color: var(--gold-light);
+            border-style: solid;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.5s;
+        }
+
+        .exchange-card::before {
+            top: -1px;
+            left: -1px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .exchange-card::after {
+            bottom: -1px;
+            right: -1px;
+            border-width: 0 2px 2px 0;
+        }
+
+        /* Corner accents appear on reveal */
+        .exchange-card.revealed::before,
+        .exchange-card.revealed::after {
+            opacity: 1;
+        }
+
+        /* Two extra pseudo via wrapper — hidden until revealed */
+        .exchange-card-inner::before,
+        .exchange-card-inner::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-color: var(--gold-light);
+            border-style: solid;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.5s;
+        }
+
+        .exchange-card-inner::before {
+            top: -1px;
+            right: -1px;
+            border-width: 2px 2px 0 0;
+        }
+
+        .exchange-card-inner::after {
+            bottom: -1px;
+            left: -1px;
+            border-width: 0 0 2px 2px;
+        }
+
+        .exchange-card-inner {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .exchange-card.revealed .exchange-card-inner::before,
+        .exchange-card.revealed .exchange-card-inner::after {
+            opacity: 1;
+        }
+
+        .exchange-icon-wrap {
+            display: inline-block;
+            margin-bottom: 1.2rem;
+            animation: float 3.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 14px rgba(212, 175, 55, 0.7)) drop-shadow(0 0 30px rgba(212, 175, 55, 0.35));
+            /* Tight gold ring in mystery state */
+            box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.5), 0 0 28px rgba(212, 175, 55, 0.18);
+            padding: 1.4rem 1.8rem;
+            transition: box-shadow 0.45s ease 0.2s, padding 0.45s ease 0.2s, margin-bottom 0.45s ease 0.2s;
+        }
+
+        @keyframes giftGlow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6)) drop-shadow(0 0 24px rgba(212, 175, 55, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 22px rgba(212, 175, 55, 0.95)) drop-shadow(0 0 48px rgba(212, 175, 55, 0.5));
+            }
+        }
+
+        .exchange-icon-wrap svg {
+            animation: giftGlow 2.8s ease-in-out infinite;
+        }
+
+        .exchange-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-style: italic;
+            color: var(--gold);
+            margin-bottom: 1.6rem;
+            line-height: 1.2;
+        }
+
+        .exchange-body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.97rem;
+            font-weight: 300;
+            color: rgba(232, 224, 206, 0.85);
+            line-height: 1.85;
+            margin-bottom: 1.2rem;
+        }
+
+        .exchange-twist {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--gold-light);
+            line-height: 1.7;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding-top: 1.4rem;
+            margin-top: 0.4rem;
+        }
+
+        /* ── Mystery reveal interaction ── */
+        .exchange-icon-wrap {
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Remove tight ring + restore spacing on reveal */
+        .exchange-card.revealed .exchange-icon-wrap {
+            box-shadow: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        /* Intensified clickable pulse on the icon itself */
+        .exchange-card:not(.revealed) .exchange-icon-wrap svg {
+            animation: giftGlow 1.6s ease-in-out infinite;
+        }
+
+        /* Tap hint */
+        .exchange-tap-hint {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: 0.9rem;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            animation: float 2.2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .exchange-card.revealed .exchange-tap-hint {
+            opacity: 0;
+        }
+
+        /* Hidden text wrapper — keeps space, fades in on reveal */
+        .exchange-reveal-text {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            pointer-events: none;
+        }
+
+        .exchange-card.revealed .exchange-reveal-text {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Delay twist slightly after title+body */
+        .exchange-reveal-text.exchange-reveal-delay {
+            transition-delay: 0.15s;
+        }
+
+        @media (max-width: 900px) {
+            .exchange-card {
+                padding: 1.8rem 1.6rem;
+            }
+
+            .exchange-card.revealed {
+                padding: 3rem 1.8rem;
+            }
+        }
+
+        /* ─── FOOTER ──────────────────────────────────────────────── */
+        footer {
+            position: relative;
+            background: var(--black);
+            overflow: hidden;
+            text-align: center;
+            padding: 5rem 2rem;
+            /* Gold top separator line */
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Sparkle canvas for footer */
+        #footer-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .footer-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.9rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.55rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        .footer-vinyl-icon {
+            flex-shrink: 0;
+            opacity: 0.85;
+        }
+
+        .footer-vibe {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 300;
+            letter-spacing: 0.18em;
+            color: rgba(212, 175, 55, 0.6);
+            max-width: 420px;
+        }
+
+        .footer-creator {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.76rem;
+            font-weight: 300;
+            letter-spacing: 0.14em;
+            color: rgba(212, 175, 55, 0.55);
+        }
+
+        .footer-creator strong {
+            font-weight: 700;
+            color: rgba(212, 175, 55, 0.85);
+            letter-spacing: 0.12em;
+        }
+
+        .footer-copy {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: rgba(212, 175, 55, 0.35);
+            margin-top: 0.4rem;
+        }
+
+        /* ─── RSVP ─────────────────────────────────────────────────── */
+        #rsvp {
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sparkle canvas fills section */
+        #rsvp-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #rsvp::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 700px;
+            height: 700px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.07) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .rsvp-inner {
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .rsvp-form {
+            background: rgba(20, 20, 20, 0.82);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 3.5rem;
+            margin-top: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Minimalist bottom-border-only inputs */
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 300;
+            padding: 0.6rem 0;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 0;
+            -webkit-appearance: none;
+        }
+
+        .form-group textarea {
+            resize: none;
+            min-height: 80px;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+            box-shadow: 0 2px 0 0 rgba(212, 175, 55, 0.25);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(138, 128, 117, 0.6);
+        }
+
+        /* ── Attendance toggle buttons ── */
+        .attendance-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        .attend-btn {
+            flex: 1;
+            padding: 0.85rem 1rem;
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            color: rgba(212, 175, 55, 0.65);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attend-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .attend-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .attend-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 18px rgba(212, 175, 55, 0.2);
+        }
+
+        .attend-btn.active {
+            border-color: var(--gold);
+            color: #000;
+            box-shadow: 0 0 28px rgba(212, 175, 55, 0.55), 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .attend-btn.active::before {
+            opacity: 1;
+        }
+
+        .attend-btn.active-no {
+            border-color: rgba(212, 175, 55, 0.5);
+            color: rgba(212, 175, 55, 0.7);
+            background: rgba(212, 175, 55, 0.06);
+            box-shadow: none;
+        }
+
+        .attend-btn.active-no::before {
+            opacity: 0;
+        }
+
+        /* ── Inline error message ── */
+        .rsvp-error {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            color: rgba(212, 175, 55, 0.8);
+            margin-top: 1rem;
+            padding: 0.65rem 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            background: rgba(212, 175, 55, 0.05);
+            animation: fadeInUp 0.35s ease both;
+        }
+
+        /* ── Submit ── */
+        .form-submit {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold));
+            background-size: 200% auto;
+            border: none;
+            color: #000;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-position 0.5s, transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-submit::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -60%;
+            width: 30%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.25);
+            transform: skewX(-20deg);
+            transition: left 0.5s;
+        }
+
+        .form-submit:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .form-submit:hover::after {
+            left: 150%;
+        }
+
+        /* Success message */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .form-success .success-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        /* ─── VINYL PLAYER FAB ────────────────────────────────────── */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .vinyl-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .vinyl-tooltip {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            background: rgba(0, 0, 0, 0.88);
+            padding: 0.4rem 0.85rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+        }
+
+        .vinyl-fab:hover .vinyl-tooltip,
+        .vinyl-fab:focus-visible .vinyl-tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* The record wrapper that spins */
+        .vinyl-disc {
+            position: relative;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            /* Always on, but paused until playing */
+            animation: spin 2.8s linear infinite;
+            animation-play-state: paused;
+            transition: box-shadow 0.45s ease;
+            will-change: transform;
+        }
+
+        .vinyl-fab.playing .vinyl-disc {
+            animation-play-state: running;
+            box-shadow:
+                0 0 0 4px rgba(0, 0, 0, 0.55),
+                0 0 24px rgba(212, 175, 55, 0.6),
+                0 0 52px rgba(212, 175, 55, 0.25);
+        }
+
+        .vinyl-disc svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        /* Diagonal shine overlay — does NOT rotate */
+        .vinyl-shine {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.13) 0%,
+                    rgba(255, 255, 255, 0.04) 40%,
+                    transparent 60%);
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .vinyl-fab {
+                bottom: 20px;
+                right: 18px;
+            }
+
+            .vinyl-disc {
+                width: 54px;
+                height: 54px;
+            }
+
+            .vinyl-tooltip {
+                display: none;
+            }
+        }
+
+        /* ─── RESPONSIVE ───────────────────────────────────────────── */
+        @media (max-width: 900px) {
+            section {
+                padding: 5rem 2rem;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .concept-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .concept-img-wrap img {
+                height: 300px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+
+            .gallery-item:first-child {
+                grid-row: auto;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .rsvp-form {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ─── ENTRY CHALLENGE OVERLAY ────────────────────────────── */
+        #entry-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+
+        #entry-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body.locked {
+            overflow: hidden;
+        }
+
+        /* Particle canvas */
+        #entry-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Card sits above canvas */
+        .entry-card {
+            position: relative;
+            z-index: 1;
+            max-width: 460px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Heading */
+        .entry-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1.25;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Sub-heading */
+        .entry-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(212, 175, 55, 0.65);
+            margin-bottom: 2.8rem;
+        }
+
+        /* Math puzzle */
+        .entry-puzzle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 7vw, 3.6rem);
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.12em;
+            margin-bottom: 2rem;
+            text-shadow:
+                0 0 14px rgba(212, 175, 55, 0.7),
+                0 0 40px rgba(212, 175, 55, 0.3),
+                0 0 80px rgba(212, 175, 55, 0.12);
+        }
+
+        /* Input — bottom border only, no spinner */
+        .entry-input-wrap {
+            margin-bottom: 1.4rem;
+        }
+
+        .entry-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.55);
+            padding: 0.85rem 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            text-align: center;
+            outline: none;
+            letter-spacing: 0.1em;
+            transition: border-color 0.3s ease, text-shadow 0.3s ease;
+            box-sizing: border-box;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .entry-input::-webkit-inner-spin-button,
+        .entry-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .entry-input::placeholder {
+            color: rgba(212, 175, 55, 0.3);
+        }
+
+        .entry-input:focus {
+            border-color: var(--gold);
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+        }
+
+        .entry-input.shake {
+            animation: inputShake 0.45s ease;
+            border-color: #c0392b;
+        }
+
+        @keyframes inputShake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            15% {
+                transform: translateX(-8px);
+            }
+
+            30% {
+                transform: translateX(8px);
+            }
+
+            45% {
+                transform: translateX(-6px);
+            }
+
+            60% {
+                transform: translateX(6px);
+            }
+
+            75% {
+                transform: translateX(-3px);
+            }
+        }
+
+        /* Button */
+        .entry-btn {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+            margin-bottom: 1.4rem;
+        }
+
+        .entry-btn:hover:not(:disabled) {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 28px rgba(212, 175, 55, 0.5);
+        }
+
+        .entry-btn:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        /* Status message */
+        .entry-msg {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.76rem;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            min-height: 1.2rem;
+        }
+
+        .entry-msg.success {
+            color: var(--gold);
+        }
+
+        .entry-msg.error {
+            color: #e74c3c;
+        }
+
+        .entry-msg.hidden {
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body class="locked">
+
+    <!-- ── ENTRY CHALLENGE OVERLAY ── -->
+    <div id="entry-overlay" role="dialog" aria-modal="true" aria-label="Входной пароль">
+        <!-- Golden dust canvas -->
+        <canvas id="entry-canvas" aria-hidden="true"></canvas>
+
+        <div class="entry-card">
+            <h1 class="entry-title">Добро пожаловать <br> ✦ <em>в особый вечер</em> ✦</h1>
+            <br>
+            <p class="entry-sub">Решите задачу, чтобы войти</p>
+            <p class="entry-puzzle" id="entryPuzzle">12 + 15&thinsp;=&thinsp;?</p>
+            <div class="entry-input-wrap">
+                <input class="entry-input" id="entryInput" type="number" inputmode="numeric" placeholder="?"
+                    autocomplete="off" aria-label="Ваш ответ" />
+            </div>
+            <button class="entry-btn" id="entryBtn">Открыть приглашение</button>
+            <p class="entry-msg hidden" id="entryMsg"></p>
+        </div>
+    </div>
+
+    <script>
+        // ── Golden dust particles ──
+        (function () {
+            const canvas = document.getElementById('entry-canvas');
+            const ctx = canvas.getContext('2d');
+            let raf;
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            // Generate stars
+            const STARS = Array.from({ length: 180 }, () => ({
+                x: Math.random(),
+                y: Math.random(),
+                r: Math.random() * 1.4 + 0.3,
+                a: Math.random() * Math.PI * 2,
+                spd: (Math.random() * 0.4 + 0.1) * (Math.random() < 0.5 ? 1 : -1),
+                base: Math.random() * 0.55 + 0.15,
+                amp: Math.random() * 0.35,
+            }));
+
+            function draw(t) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                STARS.forEach(s => {
+                    const alpha = s.base + s.amp * Math.sin(t * 0.0008 * s.spd + s.a);
+                    ctx.beginPath();
+                    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212,175,55,${alpha.toFixed(3)})`;
+                    ctx.fill();
+                });
+                raf = requestAnimationFrame(draw);
+            }
+            raf = requestAnimationFrame(draw);
+
+            // Stop canvas on overlay hide
+            window.__stopDust = () => cancelAnimationFrame(raf);
+        })();
+
+        // ── Entry challenge ──
+        (function () {
+            const ANSWER = 27;
+            const overlay = document.getElementById('entry-overlay');
+            const input = document.getElementById('entryInput');
+            const btn = document.getElementById('entryBtn');
+            const msg = document.getElementById('entryMsg');
+
+            function showMsg(text, type) {
+                msg.textContent = text;
+                msg.className = 'entry-msg ' + type;
+            }
+
+            function unlock() {
+                showMsg('Правильно! Ты в деле. ✨', 'success');
+                setTimeout(() => {
+                    overlay.classList.add('fade-out');
+                    document.body.classList.remove('locked');
+                    overlay.addEventListener('transitionend', () => {
+                        overlay.style.display = 'none';
+                        if (window.__stopDust) window.__stopDust();
+                    }, { once: true });
+                }, 750);
+            }
+
+            function attempt() {
+                const val = parseInt(input.value, 10);
+                if (val === ANSWER) {
+                    btn.disabled = true;
+                    unlock();
+                } else {
+                    input.classList.remove('shake');
+                    void input.offsetWidth;
+                    input.classList.add('shake');
+                    input.addEventListener('animationend', () => {
+                        input.classList.remove('shake');
+                        input.style.borderColor = '';
+                    }, { once: true });
+                    showMsg('Попробуй ещё раз, музыка ждёт...', 'error');
+                    input.value = '';
+                    input.focus();
+                }
+            }
+
+            btn.addEventListener('click', attempt);
+            input.addEventListener('keydown', e => {
+                if (e.key === 'Enter') attempt();
+            });
+        })();
+    </script>
+
+    <!-- ── NAV ── -->
+    <nav id="navbar">
+        <a href="#hero" class="nav-logo">♪ Midnight Serenade</a>
+        <ul class="nav-links">
+            <li><a href="#concept">The Concept</a></li>
+            <li><a href="#details">Details</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#rsvp">RSVP</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── HERO ── -->
+    <section id="hero">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="particles" id="particles"></div>
+
+        <div class="hero-content">
+            <p class="hero-eyebrow fade-in">— Эксклюзивный приватный вечер —</p>
+            <h1 class="hero-title fade-in delay-1">
+                Midnight<br /><span class="italic">Serenade</span>
+            </h1>
+            <p class="hero-subtitle fade-in delay-2">
+                Собираемся, чтобы петь любимые хиты, смеяться и создавать моменты, которые останутся с нами надолго.
+            </p>
+            <div class="hero-cta-group fade-in delay-3">
+                <a href="#rsvp" class="btn-gold">Зарегистрируйтесь</a>
+                <a href="#concept" class="btn-outline">Подробнее</a>
+            </div>
+        </div>
+
+        <div class="hero-scroll fade-in delay-4">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ── CONCEPT ── -->
+    <section id="concept">
+        <div class="container">
+            <div class="concept-grid">
+                <div class="concept-img-wrap reveal">
+                    <img src="concept_image.png" alt="Intimate karaoke lounge atmosphere" />
+                </div>
+                <div class="concept-text reveal">
+                    <span class="section-label">The Concept</span>
+                    <h2>Вечер только<br /><em> Для Своих</em></h2>
+                    <div class="divider" style="margin: 1.5rem 0;"></div>
+                    <p>
+                        Погрузись в атмосферу, где музыка объединяет, а ночь принадлежит нам. Midnight Serenade — это не
+                        просто караоке, это вечер, где элегантность встречается с драйвом.
+                    </p>
+                    <p>
+                        Наслаждайся напитками, лови свет софитов и пусть твой голос станет саундтреком этой ночи. Это
+                        твоя сцена.
+                    </p>
+                    <blockquote class="concept-quote">
+                        "Ночь будет долгой, музыка — вечной, <br />а воспоминания останутся навсегда."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── DETAILS ── -->
+    <section id="details">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">The Essentials</span>
+                <h2 class="section-title">Event <em>Details</em></h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-card reveal">
+                    <span class="detail-icon">📅</span>
+                    <p class="detail-label">Дата</p>
+                    <p class="detail-value">Суббота<br />Апрель 4, 2026</p>
+                    <p class="detail-sub">Твой звездный час</p>
+                </div>
+                <div class="detail-card reveal">
+                    <span class="detail-icon">🕘</span>
+                    <p class="detail-label">Время</p>
+                    <p class="detail-value">19:00<br />До последней песни</p>
+                    <p class="detail-sub">Сбор гостей в 18:30</p>
+                </div>
+                <div class="detail-card reveal">
+                    <span class="detail-icon">📍</span>
+                    <p class="detail-label">Место</p>
+                    <p class="detail-value">Караоке бар<br />V12</p>
+                    <p class="detail-sub">Адрес: 12 мкр, 43В</p>
+                </div>
+            </div>
+
+            <div class="dress-code reveal">
+                <p class="dress-code-label">✦ Dress Code ✦</p>
+                <p class="dress-code-text">Алфавитный &amp; стиль</p>
+                <p class="dress-code-hint">Наденьте образ на первую букву · Вашего имени · </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── GALLERY ── -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">The Atmosphere</span>
+                <h2 class="section-title">Проблеск <em>Ночи</em></h2>
+                <div class="divider"></div>
+            </div>
+
+            <!-- ── COUNTDOWN ── -->
+            <div class="countdown-wrap reveal" id="countdown" aria-live="polite"
+                aria-label="Обратный отсчёт до события">
+                <div class="countdown-unit">
+                    <span class="countdown-number" id="cd-days">--</span>
+                    <span class="countdown-label">дней</span>
+                </div>
+                <div class="countdown-sep">·</div>
+                <div class="countdown-unit">
+                    <span class="countdown-number" id="cd-hours">--</span>
+                    <span class="countdown-label">часов</span>
+                </div>
+                <div class="countdown-sep">·</div>
+                <div class="countdown-unit">
+                    <span class="countdown-number" id="cd-minutes">--</span>
+                    <span class="countdown-label">минут</span>
+                </div>
+                <div class="countdown-sep">·</div>
+                <div class="countdown-unit">
+                    <span class="countdown-number" id="cd-seconds">--</span>
+                    <span class="countdown-label">секунд</span>
+                </div>
+            </div>
+
+            <div class="gallery-grid reveal">
+                <div class="gallery-item">
+                    <img src="gallery_1.png" alt="Luxury party atmosphere" />
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="gallery_2.png" alt="Microphone on stage" />
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="gallery_3.png" alt="Elegant celebration" />
+                    <div class="gallery-overlay"></div>
+                </div>
+                <div class="gallery-item" style="grid-column: 2 / 4;">
+                    <img src="hero_background.png" alt="Event atmosphere" style="object-position: center 30%;" />
+                    <div class="gallery-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SECRET EXCHANGE ── -->
+    <section id="exchange">
+        <div class="container">
+            <div class="exchange-card reveal" id="exchangeCard">
+                <div class="exchange-card-inner"></div>
+
+                <!-- Clickable gift icon -->
+                <div class="exchange-icon-wrap" id="exchangeIcon" role="button" aria-label="Раскрыть миссию"
+                    tabindex="0">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true">
+                        <!-- Box body -->
+                        <rect x="8" y="28" width="48" height="30" rx="1" stroke="#D4AF37" stroke-width="1.8"
+                            fill="rgba(212,175,55,0.05)" />
+                        <!-- Lid -->
+                        <rect x="5" y="20" width="54" height="10" rx="1" stroke="#D4AF37" stroke-width="1.8"
+                            fill="rgba(212,175,55,0.08)" />
+                        <!-- Vertical ribbon -->
+                        <line x1="32" y1="20" x2="32" y2="58" stroke="#F0D060" stroke-width="2" />
+                        <!-- Horizontal ribbon -->
+                        <line x1="8" y1="25" x2="56" y2="25" stroke="#F0D060" stroke-width="2" />
+                        <!-- Bow left loop -->
+                        <path d="M32 20 C28 14, 18 14, 20 20" stroke="#F0D060" stroke-width="1.8" fill="none"
+                            stroke-linecap="round" />
+                        <!-- Bow right loop -->
+                        <path d="M32 20 C36 14, 46 14, 44 20" stroke="#F0D060" stroke-width="1.8" fill="none"
+                            stroke-linecap="round" />
+                        <!-- Bow knot -->
+                        <circle cx="32" cy="20" r="2.5" fill="#D4AF37" />
+                        <!-- Shimmer sparkles -->
+                        <circle cx="52" cy="12" r="1.5" fill="#F0D060" opacity="0.7" />
+                        <circle cx="12" cy="15" r="1" fill="#F0D060" opacity="0.5" />
+                        <circle cx="56" cy="34" r="1" fill="#F0D060" opacity="0.4" />
+                    </svg>
+                    <span class="exchange-tap-hint">✦ &nbsp;Нажми, чтобы открыть&nbsp; ✦</span>
+                </div>
+
+                <!-- Hidden content — space always reserved, fades in on click -->
+                <h2 class="exchange-title exchange-reveal-text">The Secret Exchange</h2>
+
+                <p class="exchange-body exchange-reveal-text">
+                    Твой образ — это только начало. Купи небольшой подарок,
+                    цвет которого совпадает с цветом твоего костюма.
+                </p>
+
+                <p class="exchange-twist exchange-reveal-text exchange-reveal-delay">
+                    В конце вечера мы обменяемся ими вслепую.<br />
+                    Пусть цвет твоей буквы принесет кому-то удачу!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── RSVP ── -->
+    <section id="rsvp">
+        <!-- Golden Dust sparkle canvas -->
+        <canvas id="rsvp-canvas" aria-hidden="true"></canvas>
+
+        <div class="rsvp-inner">
+            <div class="section-header reveal">
+                <span class="section-label">Reserve Your Place</span>
+                <h2 class="section-title">Будешь <em>с нами?</em></h2>
+                <div class="divider"></div>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 420px; margin: 0 auto;">
+                    Места строго ограничены. Подтверди своё участие, чтобы занять место.
+                </p>
+            </div>
+
+            <div class="rsvp-form reveal">
+                <form id="rsvpForm" action="https://api.sheetbest.com/sheets/25c3f15b-bbf4-49b6-bd52-7f9f866de7d6"
+                    method="POST">
+                    <!-- Field 1: Name -->
+                    <div class="form-group">
+                        <label for="name">Ваше Имя</label>
+                        <input type="text" id="name" name="name" placeholder="Введите имя" required />
+                    </div>
+
+                    <!-- Field 2: Attendance toggle -->
+                    <div class="form-group">
+                        <label>Вы придёте?</label>
+                        <div class="attendance-group">
+                            <button type="button" class="attend-btn" id="btnYes" data-value="yes">
+                                <span>✦ Да, буду!</span>
+                            </button>
+                            <button type="button" class="attend-btn" id="btnNo" data-value="no">
+                                <span>К сожалению, нет</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="attendance" name="attendance" value="" />
+                    </div>
+
+                    <!-- Field 3: Song request -->
+                    <div class="form-group">
+                        <label for="song">Твоя песня для <em
+                                style="font-style:italic; font-family:'Playfair Display',serif;">Караоке</em></label>
+                        <textarea id="song" name="song" placeholder="Например: Меладзе — Салют, Вера"></textarea>
+                    </div>
+
+                    <button type="submit" class="form-submit" id="submitBtn">✦ Отправить подтверждение ✦</button>
+                </form>
+                <div class="form-success" id="formSuccess">
+                    <span class="success-icon">🎤</span>
+                    <h3 class="shimmer-text">Увидимся на сцене!</h3>
+                    <p>Ваше участие подтверждено. Готовьте голос — ночь ждёт вас.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+        <!-- Golden Dust sparkle canvas -->
+        <canvas id="footer-canvas" aria-hidden="true"></canvas>
+
+        <div class="footer-inner">
+            <!-- Line 1: Brand -->
+            <div class="footer-brand">
+                <!-- Mini vinyl SVG icon -->
+                <svg class="footer-vinyl-icon" width="28" height="28" viewBox="0 0 28 28" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="14" cy="14" r="14" fill="#111" />
+                    <circle cx="14" cy="14" r="13" stroke="#D4AF37" stroke-width="0.3" opacity="0.5" />
+                    <circle cx="14" cy="14" r="11" stroke="#D4AF37" stroke-width="0.3" opacity="0.45" />
+                    <circle cx="14" cy="14" r="9" stroke="#D4AF37" stroke-width="0.3" opacity="0.4" />
+                    <circle cx="14" cy="14" r="7" stroke="#D4AF37" stroke-width="0.3" opacity="0.35" />
+                    <circle cx="14" cy="14" r="5" stroke="#D4AF37" stroke-width="0.3" opacity="0.3" />
+                    <circle cx="14" cy="14" r="3.8" fill="#D4AF37" />
+                    <circle cx="14" cy="14" r="2.8" fill="#A8891E" />
+                    <circle cx="14" cy="14" r="1.8" fill="#D4AF37" />
+                    <circle cx="14" cy="14" r="0.7" fill="#0a0a0a" />
+                </svg>
+                <div class="footer-logo">Midnight Serenade</div>
+            </div>
+
+            <!-- Line 2: Vibe -->
+            <p class="footer-vibe">A private evening of unmatched elegance and vocal artistry.</p>
+
+            <!-- Line 3: Creator -->
+            <p class="footer-creator">Created by <strong>Бахытжан Бекарыс</strong></p>
+
+            <!-- Line 4: Copyright -->
+            <p class="footer-copy">&copy; 2026 &bull; Almaty &bull; All nights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ── Navbar scroll effect ──
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ── Parallax hero bg ──
+        const heroBg = document.getElementById('heroBg');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            heroBg.style.transform = `scale(1.08) translateY(${scrolled * 0.25}px)`;
+        }, { passive: true });
+
+        // ── Gold particles ──
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 25; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            const size = Math.random() * 3 + 1;
+            p.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${Math.random() * 100}%;
+        animation-duration: ${Math.random() * 8 + 6}s;
+        animation-delay: ${Math.random() * 8}s;
+      `;
+            particlesContainer.appendChild(p);
+        }
+
+        // ── Scroll reveal ──
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        revealEls.forEach(el => observer.observe(el));
+
+        // ── RSVP attendance toggle ──
+        let attendanceValue = '';
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const attendanceInput = document.getElementById('attendance');
+
+        btnYes.addEventListener('click', function () {
+            attendanceValue = 'yes';
+            attendanceInput.value = 'yes';
+            btnYes.classList.add('active');
+            btnYes.classList.remove('active-no');
+            btnNo.classList.remove('active');
+            btnNo.classList.add('active-no');
+        });
+
+        btnNo.addEventListener('click', function () {
+            attendanceValue = 'no';
+            attendanceInput.value = 'no';
+            btnNo.classList.add('active');
+            btnNo.classList.remove('active-no');
+            btnYes.classList.remove('active');
+            btnYes.classList.add('active-no');
+        });
+
+        // ── RSVP form submission → Sheetbest API ──
+        document.getElementById('rsvpForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('submitBtn');
+            const form = e.target;
+            const SHEETBEST_URL = 'https://api.sheetbest.com/sheets/25c3f15b-bbf4-49b6-bd52-7f9f866de7d6';
+
+            // Remove any previous error banner
+            const existingErr = form.querySelector('.rsvp-error');
+            if (existingErr) existingErr.remove();
+
+            // Loading state
+            btn.disabled = true;
+            btn.textContent = '⏳ Отправляем...';
+            btn.style.opacity = '0.75';
+
+            // Build payload — matches spreadsheet column names
+            const payload = {
+                name: document.getElementById('name').value.trim(),
+                attendance: document.getElementById('attendance').value || '—',
+                song: document.getElementById('song').value.trim() || '—',
+            };
+
+            try {
+                const res = await fetch(SHEETBEST_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+                // ✔ Success
+                btn.textContent = '✓ Подтверждено!';
+                btn.style.background = 'linear-gradient(135deg, var(--gold-dark), var(--gold))';
+                btn.style.color = '#000';
+                btn.style.opacity = '1';
+                btn.style.boxShadow = '0 0 30px rgba(212,175,55,0.45)';
+
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    const success = document.getElementById('formSuccess');
+                    success.style.display = 'block';
+                    success.style.animation = 'fadeInUp 0.6s ease both';
+                }, 700);
+
+            } catch (err) {
+                // ✖ Error — show inline gold alert, re-enable button
+                btn.disabled = false;
+                btn.textContent = '✦ Отправить подтверждение ✦';
+                btn.style.opacity = '1';
+
+                const errMsg = document.createElement('p');
+                errMsg.className = 'rsvp-error';
+                errMsg.textContent = '⚠️ Ошибка, попробуйте позже';
+                form.appendChild(errMsg);
+            }
+        });
+
+        // ── RSVP Golden Dust sparkle canvas ──
+        (function () {
+            const canvas = document.getElementById('rsvp-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let raf;
+
+            function resize() {
+                const section = document.getElementById('rsvp');
+                canvas.width = section.offsetWidth;
+                canvas.height = section.offsetHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize, { passive: true });
+
+            const STARS = Array.from({ length: 120 }, () => ({
+                x: Math.random(),
+                y: Math.random(),
+                r: Math.random() * 1.2 + 0.25,
+                a: Math.random() * Math.PI * 2,
+                spd: (Math.random() * 0.5 + 0.15) * (Math.random() < 0.5 ? 1 : -1),
+                base: Math.random() * 0.3 + 0.05,
+                amp: Math.random() * 0.25,
+            }));
+
+            function draw(t) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                STARS.forEach(s => {
+                    const alpha = s.base + s.amp * Math.sin(t * 0.0007 * s.spd + s.a);
+                    ctx.beginPath();
+                    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212,175,55,${alpha.toFixed(3)})`;
+                    ctx.fill();
+                });
+                raf = requestAnimationFrame(draw);
+            }
+            raf = requestAnimationFrame(draw);
+        })();
+
+        // ── Footer Golden Dust sparkle canvas ──
+        (function () {
+            const canvas = document.getElementById('footer-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let raf;
+
+            function resize() {
+                const ft = document.querySelector('footer');
+                canvas.width = ft.offsetWidth;
+                canvas.height = ft.offsetHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize, { passive: true });
+
+            const STARS = Array.from({ length: 80 }, () => ({
+                x: Math.random(),
+                y: Math.random(),
+                r: Math.random() * 1.1 + 0.2,
+                a: Math.random() * Math.PI * 2,
+                spd: (Math.random() * 0.4 + 0.1) * (Math.random() < 0.5 ? 1 : -1),
+                base: Math.random() * 0.2 + 0.04,
+                amp: Math.random() * 0.18,
+            }));
+
+            function draw(t) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                STARS.forEach(s => {
+                    const alpha = s.base + s.amp * Math.sin(t * 0.0006 * s.spd + s.a);
+                    ctx.beginPath();
+                    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212,175,55,${alpha.toFixed(3)})`;
+                    ctx.fill();
+                });
+                raf = requestAnimationFrame(draw);
+            }
+            raf = requestAnimationFrame(draw);
+        })();
+
+        // ── Countdown timer ──
+        (function () {
+            const TARGET = new Date('2026-04-04T19:00:00');
+            const els = {
+                days: document.getElementById('cd-days'),
+                hours: document.getElementById('cd-hours'),
+                minutes: document.getElementById('cd-minutes'),
+                seconds: document.getElementById('cd-seconds'),
+            };
+
+            function pad(n) { return String(n).padStart(2, '0'); }
+
+            function animateTick(el, newVal) {
+                const formatted = newVal === 0 && el.id === 'cd-days' ? '00' : pad(newVal);
+                if (el.textContent === formatted) return;
+                el.classList.add('tick');
+                setTimeout(() => {
+                    el.textContent = formatted;
+                    el.classList.remove('tick');
+                }, 180);
+            }
+
+            function updateCountdown() {
+                const now = new Date();
+                const diff = TARGET - now;
+                if (diff <= 0) {
+                    document.getElementById('countdown').style.display = 'none';
+                    return;
+                }
+                const days = Math.floor(diff / 86400000);
+                const hours = Math.floor((diff % 86400000) / 3600000);
+                const minutes = Math.floor((diff % 3600000) / 60000);
+                const seconds = Math.floor((diff % 60000) / 1000);
+                animateTick(els.days, days);
+                animateTick(els.hours, hours);
+                animateTick(els.minutes, minutes);
+                animateTick(els.seconds, seconds);
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        })();
+
+        // ── Secret Exchange reveal ──
+        const exchangeIcon = document.getElementById('exchangeIcon');
+        const exchangeCard = document.getElementById('exchangeCard');
+        function revealExchange() {
+            if (!exchangeCard.classList.contains('revealed')) {
+                exchangeCard.classList.add('revealed');
+                exchangeIcon.setAttribute('aria-label', 'Миссия раскрыта');
+            }
+        }
+        exchangeIcon.addEventListener('click', revealExchange);
+        exchangeIcon.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); revealExchange(); }
+        });
+
+        // ── Active nav link highlight ──
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (window.scrollY >= section.offsetTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.style.color = link.getAttribute('href') === `#${current}`
+                    ? 'var(--gold)'
+                    : 'var(--text-muted)';
+            });
+        }, { passive: true });
+    </script>
+    <!-- ── VINYL PLAYER ── -->
+    <audio id="bgAudio" src="music.mp3" loop preload="none"></audio>
+
+    <button class="vinyl-fab" id="vinylFab" aria-label="Воспроизвести музыку">
+        <span class="vinyl-tooltip" id="vinylTooltip">Play Music</span>
+        <div class="vinyl-disc">
+            <!-- SVG Vinyl Record -->
+            <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <!-- Main disc -->
+                <circle cx="60" cy="60" r="60" fill="#111" />
+                <!-- Groove rings — concentric gold lines from outer to inner -->
+                <circle cx="60" cy="60" r="57" stroke="#D4AF37" stroke-width="0.4" opacity="0.45" />
+                <circle cx="60" cy="60" r="53" stroke="#D4AF37" stroke-width="0.35" opacity="0.4" />
+                <circle cx="60" cy="60" r="49" stroke="#D4AF37" stroke-width="0.35" opacity="0.38" />
+                <circle cx="60" cy="60" r="45" stroke="#D4AF37" stroke-width="0.3" opacity="0.35" />
+                <circle cx="60" cy="60" r="41" stroke="#D4AF37" stroke-width="0.3" opacity="0.35" />
+                <circle cx="60" cy="60" r="37" stroke="#D4AF37" stroke-width="0.3" opacity="0.32" />
+                <circle cx="60" cy="60" r="33" stroke="#D4AF37" stroke-width="0.3" opacity="0.3" />
+                <circle cx="60" cy="60" r="29" stroke="#D4AF37" stroke-width="0.28" opacity="0.28" />
+                <circle cx="60" cy="60" r="25" stroke="#D4AF37" stroke-width="0.28" opacity="0.25" />
+                <!-- Center label — solid gold disc -->
+                <circle cx="60" cy="60" r="18" fill="#D4AF37" />
+                <circle cx="60" cy="60" r="14" fill="#A8891E" />
+                <circle cx="60" cy="60" r="10" fill="#D4AF37" />
+                <circle cx="60" cy="60" r="6" fill="#B8962A" />
+                <!-- Spindle hole -->
+                <circle cx="60" cy="60" r="2.5" fill="#0a0a0a" />
+            </svg>
+            <!-- Shine overlay does NOT spin with the disc -->
+            <div class="vinyl-shine"></div>
+        </div>
+    </button>
+
+    <script>
+        // ── Vinyl player ──
+        const vinylFab = document.getElementById('vinylFab');
+        const bgAudio = document.getElementById('bgAudio');
+        const vinylTip = document.getElementById('vinylTooltip');
+        let isPlaying = false;
+
+        vinylFab.addEventListener('click', () => {
+            if (isPlaying) {
+                bgAudio.pause();
+                vinylFab.classList.remove('playing');
+                vinylFab.setAttribute('aria-label', 'Воспроизвести музыку');
+                vinylTip.textContent = 'Play Music';
+                isPlaying = false;
+            } else {
+                bgAudio.play().catch(() => { });
+                vinylFab.classList.add('playing');
+                vinylFab.setAttribute('aria-label', 'Пауза');
+                vinylTip.textContent = 'Pause';
+                isPlaying = true;
+            }
+        });
+
+        bgAudio.addEventListener('pause', () => {
+            vinylFab.classList.remove('playing');
+            vinylTip.textContent = 'Play Music';
+            isPlaying = false;
+        });
+    </script>
+</body>
+
+</html>
