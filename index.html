@@ -589,6 +589,44 @@
             margin-top: 0.3rem;
         }
 
+        /* ── 2GIS map button ── */
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-top: 1rem;
+            padding: 0.65rem 1.2rem;
+            border: 1px solid rgba(212, 175, 55, 0.55);
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: transparent;
+            transition: background 0.3s ease, color 0.3s ease,
+                border-color 0.3s ease, box-shadow 0.3s ease;
+            /* Ensure comfortable tap target on mobile */
+            min-height: 44px;
+        }
+
+        .map-btn svg {
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .map-btn:hover,
+        .map-btn:focus-visible {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+            box-shadow: 0 0 18px rgba(212, 175, 55, 0.25);
+        }
+
+        .map-btn:hover svg {
+            transform: translateY(-1px);
+        }
+
         .dress-code {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03));
             border: 1px solid var(--border);
@@ -1512,18 +1550,29 @@
             margin-bottom: 2.8rem;
         }
 
-        /* Math puzzle */
+        /* Date puzzle heading */
         .entry-puzzle {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.4rem, 7vw, 3.6rem);
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
             font-weight: 700;
             color: var(--gold);
-            letter-spacing: 0.12em;
-            margin-bottom: 2rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.7rem;
             text-shadow:
                 0 0 14px rgba(212, 175, 55, 0.7),
                 0 0 40px rgba(212, 175, 55, 0.3),
                 0 0 80px rgba(212, 175, 55, 0.12);
+        }
+
+        /* Format hint */
+        .entry-hint {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            color: rgba(212, 175, 55, 0.5);
+            margin-bottom: 1.8rem;
+            display: block;
         }
 
         /* Input — bottom border only, no spinner */
@@ -1658,11 +1707,12 @@
         <div class="entry-card">
             <h1 class="entry-title">Добро пожаловать <br> ✦ <em>в особый вечер</em> ✦</h1>
             <br>
-            <p class="entry-sub">Решите задачу, чтобы войти</p>
-            <p class="entry-puzzle" id="entryPuzzle">12 + 15&thinsp;=&thinsp;?</p>
+            <p class="entry-sub">Введите ответ, чтобы войти</p>
+            <p class="entry-puzzle" id="entryPuzzle">Дата выпускного</p>
+            <span class="entry-hint">Формат: ДД.ММ.ГГГГ</span>
             <div class="entry-input-wrap">
-                <input class="entry-input" id="entryInput" type="number" inputmode="numeric" placeholder="?"
-                    autocomplete="off" aria-label="Ваш ответ" />
+                <input class="entry-input" id="entryInput" type="text" inputmode="numeric" placeholder="ДД.ММ.ГГГГ"
+                    autocomplete="off" aria-label="Дата выпускного" maxlength="10" />
             </div>
             <button class="entry-btn" id="entryBtn">Открыть приглашение</button>
             <p class="entry-msg hidden" id="entryMsg"></p>
@@ -1711,9 +1761,9 @@
             window.__stopDust = () => cancelAnimationFrame(raf);
         })();
 
-        // ── Entry challenge ──
+        // ── Entry challenge (date mask DD.MM.YYYY) ──
         (function () {
-            const ANSWER = 27;
+            const CORRECT = '21.06.2003';
             const overlay = document.getElementById('entry-overlay');
             const input = document.getElementById('entryInput');
             const btn = document.getElementById('entryBtn');
@@ -1725,7 +1775,8 @@
             }
 
             function unlock() {
-                showMsg('Правильно! Ты в деле. ✨', 'success');
+                showMsg('Правильно, добро пожаловать! ✨', 'success');
+                btn.disabled = true;
                 setTimeout(() => {
                     overlay.classList.add('fade-out');
                     document.body.classList.remove('locked');
@@ -1733,13 +1784,44 @@
                         overlay.style.display = 'none';
                         if (window.__stopDust) window.__stopDust();
                     }, { once: true });
-                }, 750);
+                }, 900);
             }
 
+            // Auto-format input as DD.MM.YYYY while the user types
+            input.addEventListener('input', function (e) {
+                // Strip everything except digits
+                let digits = this.value.replace(/\D/g, '');
+
+                // Build the masked string
+                let masked = '';
+                if (digits.length > 0) masked += digits.substring(0, 2);
+                if (digits.length >= 3) masked += '.' + digits.substring(2, 4);
+                if (digits.length >= 5) masked += '.' + digits.substring(4, 8);
+
+                // Only update if value changed to avoid caret jumping on mobile
+                if (this.value !== masked) this.value = masked;
+
+                // Clear any existing error styling when user edits
+                msg.className = 'entry-msg hidden';
+                input.style.borderColor = '';
+            });
+
+            // Prevent non-digit, non-dot, non-control keys
+            input.addEventListener('keydown', function (e) {
+                const allowed = [
+                    'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter',
+                    'Home', 'End'
+                ];
+                if (allowed.includes(e.key)) {
+                    if (e.key === 'Enter') { e.preventDefault(); attempt(); }
+                    return;
+                }
+                if (!/^\d$/.test(e.key)) e.preventDefault();
+            });
+
             function attempt() {
-                const val = parseInt(input.value, 10);
-                if (val === ANSWER) {
-                    btn.disabled = true;
+                const val = input.value.trim();
+                if (val === CORRECT) {
                     unlock();
                 } else {
                     input.classList.remove('shake');
@@ -1749,16 +1831,13 @@
                         input.classList.remove('shake');
                         input.style.borderColor = '';
                     }, { once: true });
-                    showMsg('Попробуй ещё раз, музыка ждёт...', 'error');
+                    showMsg('Неверная дата, попробуйте еще раз', 'error');
                     input.value = '';
                     input.focus();
                 }
             }
 
             btn.addEventListener('click', attempt);
-            input.addEventListener('keydown', e => {
-                if (e.key === 'Enter') attempt();
-            });
         })();
     </script>
 
@@ -1838,7 +1917,7 @@
                 <div class="detail-card reveal">
                     <span class="detail-icon">📅</span>
                     <p class="detail-label">Дата</p>
-                    <p class="detail-value">Суббота<br />Апрель 4, 2026</p>
+                    <p class="detail-value">Среда<br />Марта 25, 2026</p>
                     <p class="detail-sub">Твой звездный час</p>
                 </div>
                 <div class="detail-card reveal">
@@ -1850,8 +1929,17 @@
                 <div class="detail-card reveal">
                     <span class="detail-icon">📍</span>
                     <p class="detail-label">Место</p>
-                    <p class="detail-value">Караоке бар<br />V12</p>
-                    <p class="detail-sub">Адрес: 12 мкр, 43В</p>
+                    <p class="detail-value">Караоке бар<br />SUNRISE</p>
+                    <p class="detail-sub">Адрес: р-н Келешек, с/к Виктория 1-1</p>
+                    <a class="map-btn" href="https://go.2gis.com/57eg8" target="_blank" rel="noopener noreferrer"
+                        aria-label="Открыть адрес в 2ГИС">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        Открыть в 2ГИС
+                    </a>
                 </div>
             </div>
 
